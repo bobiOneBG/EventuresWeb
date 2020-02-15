@@ -47,6 +47,11 @@ namespace Eventures.Web.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -61,6 +66,17 @@ namespace Eventures.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "First name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [Display(Name = "Last name")]
+            public string LastName { get; set; }
+            [Required]
+            [Display(Name = "Unique citizen number")]
+            public string UCN { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
