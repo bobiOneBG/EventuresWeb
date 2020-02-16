@@ -5,15 +5,20 @@
 @inject UserManager<EventuresUser> UserManager
 
 @if (SignInManager.IsSignedIn(User))
-{
+{// TO DO:
     <div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Events
         </a>
 
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="#">All Events</a>
-            <a class="dropdown-item" href="#">Create event</a>
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="dropdown-item" href="#">Create event</a>
+            }
+
             @*<a class="dropdown-item" href="#">Something else here</a>*@
         </div>
     </div>

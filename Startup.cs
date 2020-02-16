@@ -2,6 +2,7 @@ namespace Eventures
 {
     using Eventures.Data;
     using Eventures.Domain;
+    using Microsoft.AspNet.Identity;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,7 @@ namespace Eventures
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using System.Linq;
 
     public class Startup
     {
@@ -27,6 +29,7 @@ namespace Eventures
                     this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<EventuresUser, IdentityRole>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<EventuresDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -47,7 +50,7 @@ namespace Eventures
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -68,6 +71,8 @@ namespace Eventures
                     .GetRequiredService<EventuresDbContext>();
 
                 context.Database.EnsureCreated();
+
+                CreateRoles(context, roleManager);
             }
 
             app.UseHttpsRedirection();
@@ -84,6 +89,30 @@ namespace Eventures
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+        }
+
+        private void CreateRoles(EventuresDbContext context,
+            Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> roleManager)
+        {
+            var roles = new string[] { "Admin", "User" };
+
+            if (roleManager.Roles.Count() != roles.Length)
+            {
+
+            }
+            foreach (var role in roles)
+            {
+                if (roleManager.FindByNameAsync(role) == null)
+                {                   
+                    context.Roles.Add(new IdentityRole
+                    {
+                        Name = role,
+                        NormalizedName = role.ToUpper()
+                    });
+
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }
