@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
 
 namespace Eventures.Web.Areas.Identity.Pages.Account
 {
@@ -91,8 +92,18 @@ namespace Eventures.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new EventuresUser { UserName = Input.Email, Email = Input.Email };
+                var user = new EventuresUser 
+                { 
+                    UserName = Input.Username,
+                    Email = Input.Email,
+                    FirstName=Input.FirstName,
+                    LastName=Input.LastName,
+                    UCN=Input.UCN
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

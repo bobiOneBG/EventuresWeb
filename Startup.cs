@@ -25,6 +25,7 @@ namespace Eventures
             services.AddDbContext<EventuresDbContext>(options =>
                 options.UseSqlServer(
                     this.Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<EventuresUser, IdentityRole>()
                 .AddEntityFrameworkStores<EventuresDbContext>()
                 .AddDefaultTokenProviders();
@@ -60,9 +61,9 @@ namespace Eventures
                 app.UseHsts();
             }
 
-            using (var serviceScope = app.ApplicationServices.CreateScope())
+            using (IServiceScope serviceScope = app.ApplicationServices.CreateScope())
             {
-                using var context = serviceScope
+                using EventuresDbContext context = serviceScope
                     .ServiceProvider
                     .GetRequiredService<EventuresDbContext>();
 

@@ -1,13 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using Microsoft.AspNetCore.Identity
+@using Eventures.Domain
+
+@inject SignInManager<EventuresUser> SignInManager
+@inject UserManager<EventuresUser> UserManager
+@{ 
+    ViewData["Title"] = "Index";
+}
+@if (SignInManager.IsSignedIn(User))
+{
+
+    var username = User.Identity.Name;
+
+    <div class="container w-55 bg-eventures pt-lg-5 text-center">
+        <h2>Welcome, @username </h2>
+        <hr class="hr-3 bg-dark " />
+
+        <h4 class="pb-lg-5">Eventures wishes you an exciting experience.</h4>
+    </div>
 }
 
-        <div class="container-fluid w-75 bg-eventures ">
-            <h2 class="pt-3">Eventures - The best ticket service in the world.</h2>
-            <hr class="hr-3 bg-dark" />
+else
+{
+    <div class="container w-55 bg-eventures ">
+        <h2 class="pt-3">Eventures - The best ticket service in the world.</h2>
 
-            <h4 class="mt-4"><a href="/Identity/Account/Login">Login</a> to start "eventing".</h4>
-            <h4 class="mt-4 pb-4"><a href="/Identity/Account/Register">Register</a> if you don't have an account.</h4>
-        </div>
+        <hr class="hr-3 bg-dark" />
+
+        <h4 class="mt-4"><a href="/Identity/Account/Login">Login</a> to start "eventing".</h4>
+        <h4 class="mt-4 pb-4"><a href="/Identity/Account/Register">Register</a> if you don't have an account.</h4>
+    </div>
+}
