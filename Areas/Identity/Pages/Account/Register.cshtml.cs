@@ -42,8 +42,6 @@
 
         public class InputModel
         {
-
-            [Required]
             //Max length - set up for database, min length - optional, 
             [StringLength(20, ErrorMessage = @"The {0} must be at least {2} 
                 and at max {1} characters long.", MinimumLength = 3)]
@@ -58,7 +56,6 @@
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
             [StringLength(100, ErrorMessage = @"
                 The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
             [DataType(DataType.Password)]
@@ -78,6 +75,7 @@
             [Required]
             [Display(Name = "Last name")]
             public string LastName { get; set; }
+
             [Required]
             [Display(Name = "Unique citizen number")]
             // Created custom attribute with appropriate error message /Validation Attribures folder
