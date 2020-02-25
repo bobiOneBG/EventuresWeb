@@ -1,6 +1,7 @@
 ﻿namespace Eventures.Web.Areas.Identity.Pages.Account
 {
     using Eventures.Domain;
+    using Eventures.Web.ValidationAttributes;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -41,9 +42,15 @@
 
         public class InputModel
         {
+
             [Required]
-            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+            //Max length - set up for database, min length - optional, 
+            [StringLength(20, ErrorMessage = @"The {0} must be at least {2} 
+                and at max {1} characters long.", MinimumLength = 3)]
             [Display(Name = "Username")]
+            [RegularExpression("^[a-zA-Z0-9-_.*~]*$", ErrorMessage = @"Incorrect symbol,
+                you should to put in only alfanumerical chars, dashes und underscores,
+                dots, asterisks and tildes")]
             public string Username { get; set; }
 
             [Required]
@@ -53,7 +60,7 @@
 
             [Required]
             [StringLength(100, ErrorMessage = @"
-                The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+                The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -73,6 +80,8 @@
             public string LastName { get; set; }
             [Required]
             [Display(Name = "Unique citizen number")]
+            // Created custom attribute with appropriate error message
+            [ExactLength]
             public string UCN { get; set; }
         }
 
@@ -102,16 +111,15 @@
                 IdentityResult result = await this._userManager.CreateAsync(user, this.Input.Password);
 
 
-
                 if (result.Succeeded)
                 {
                     this._logger.LogInformation("User created a new account with password.");
 
-                    if ((await _userManager.GetUsersInRoleAsync("Admin")).Count()==0)
+                    if ((await _userManager.GetUsersInRoleAsync("Admin")).Count() == 0)
                     {
                         await _userManager.AddToRoleAsync(user, "Admin");
                     }
-                    
+
                     else
                     {
                         await _userManager.AddToRoleAsync(user, "User");

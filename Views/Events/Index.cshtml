@@ -1,0 +1,73 @@
+﻿@model List<Eventures.Domain.Event>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">All Events </h1>
+<hr class="hr-3" />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                End
+            </th>
+            <th>
+                Place
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Total)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PricePerTicket)
+                </th>*@
+            @*<th></th>*@
+        </tr>
+    </thead>
+
+    <tbody>
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>
+                    @Model[i].Name
+                </td>
+                <td>
+                    @Model[i].Start
+                </td>
+                <td>
+                    @Model[i].End
+                </td>
+                <td>
+                    @Model[i].Place
+                </td>
+
+
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PricePerTicket)
+                    </td>*@
+                @*<td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>*@
+            </tr>
+
+        }
+    </tbody>
+</table>
+<hr class="hr-3" />

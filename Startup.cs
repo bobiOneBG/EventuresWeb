@@ -2,7 +2,7 @@ namespace Eventures
 {
     using Eventures.Data;
     using Eventures.Domain;
-    using Microsoft.AspNet.Identity;
+    using Eventures.Web.Services;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -10,7 +10,6 @@ namespace Eventures
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using System.Linq;
 
     public class Startup
     {
@@ -47,6 +46,7 @@ namespace Eventures
             });
 
             services.AddMvc(opt => opt.EnableEndpointRouting = false);
+            services.AddTransient<IEventsService, EventsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,14 +96,10 @@ namespace Eventures
         {
             var roles = new string[] { "Admin", "User" };
 
-            if (roleManager.Roles.Count() != roles.Length)
-            {
-
-            }
             foreach (var role in roles)
             {
-                if (roleManager.FindByNameAsync(role) == null)
-                {                   
+                if (!roleManager.RoleExistsAsync(role).Result)
+                {
                     context.Roles.Add(new IdentityRole
                     {
                         Name = role,

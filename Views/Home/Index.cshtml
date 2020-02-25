@@ -3,12 +3,11 @@
 
 @inject SignInManager<EventuresUser> SignInManager
 @inject UserManager<EventuresUser> UserManager
-@{ 
+@{
     ViewData["Title"] = "Index";
 }
-@if (SignInManager.IsSignedIn(User))
+@if (User.IsInRole("User"))
 {
-
     var username = User.Identity.Name;
 
     <div class="container w-55 bg-eventures pt-lg-5 text-center">
@@ -16,6 +15,16 @@
         <hr class="hr-3 bg-dark " />
 
         <h4 class="pb-lg-5">Eventures wishes you an exciting experience.</h4>
+    </div>
+}
+
+else if (User.IsInRole("Admin"))
+{
+    <div class="container w-55 bg-eventures pt-lg-5 text-center">
+        <h2>Greetings, Administrator - Admin </h2>
+        <hr class="hr-3 text-secondary bg-dark " />
+
+        <h4 class="text-secondary pb-lg-5">Enjoj your work.</h4>
     </div>
 }
 

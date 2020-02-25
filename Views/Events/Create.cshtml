@@ -1,0 +1,67 @@
+﻿@model Eventures.Domain.Event
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center">Create Event</h1>
+
+<div class="row container-fluid d-flex justify-content-center text-center">
+    <div class="col-md-6">
+
+        <form asp-action="Create">
+            //<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <hr class="hr-3" />
+            <div class="form-row pb-3">
+                <div class="col">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Name..." />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Place" class="control-label"></label>
+                    <input asp-for="Place" class="form-control" placeholder="Place..." />
+                    <span asp-validation-for="Place" class="text-danger"></span>
+                </div>
+            </div>
+            <hr class="hr-3" />
+            <div class="form-row pb-3">
+                <div class="col">
+                    <label asp-for="Start"></label>
+                    <input asp-for="Start" class="form-control" type="date"/>
+                    <span asp-validation-for="Start" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="End"></label>
+                    <input asp-for="End" class="form-control" type="date"/>
+                    <span asp-validation-for="End" class="text-danger"></span>
+                </div>
+            </div>
+            <hr class="hr-3" />
+            <div class="form-row pb-3">
+                <div class="col">
+                    <label asp-for="Total" class="control-label"></label>
+                    <input asp-for="Total" class="form-control" />
+                    <span asp-validation-for="Total" class="text-danger"></span>
+                </div>
+                <div class="col ">
+                    <label asp-for="PricePerTicket" class="control-label"></label>
+                    <input asp-for="PricePerTicket" class="form-control" />
+                    <span asp-validation-for="PricePerTicket" class="text-danger"></span>
+                </div>
+            </div>
+            <hr class="hr-3" />
+            <div class="form-group">
+                <input type="submit" value="Create Event" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+        <a asp-action="Index">Back to List</a>
+    </div>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -4,7 +4,9 @@ for details on configuring this project to bundle and minify static web assets. 
 .hr-3 {
     background-color:#AFEEEE;
     height: 3px;
-}.w-55{
+}
+
+.w-55{
      width: 55%;
  }
 
@@ -81,7 +83,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 .footer {
   position: absolute;
