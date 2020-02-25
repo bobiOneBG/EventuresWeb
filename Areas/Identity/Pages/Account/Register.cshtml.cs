@@ -80,7 +80,7 @@
             public string LastName { get; set; }
             [Required]
             [Display(Name = "Unique citizen number")]
-            // Created custom attribute with appropriate error message
+            // Created custom attribute with appropriate error message /Validation Attribures folder
             [ExactLength]
             public string UCN { get; set; }
         }
